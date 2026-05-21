@@ -22,7 +22,8 @@ router.post('/', async (req, res) => {
 router.get('/', authMiddleware, async (req, res) => {
   try {
     const [rows] = await db.query(
-      'SELECT * FROM sensor_data ORDER BY created_at DESC LIMIT 1'
+      'SELECT * FROM sensor_data WHERE user_id = ? OR user_id IS NULL ORDER BY created_at DESC LIMIT 1',
+      [req.user.id]
     );
     res.json({ recebido: rows[0] || null });
   } catch (err) {
@@ -33,7 +34,8 @@ router.get('/', authMiddleware, async (req, res) => {
 router.get('/historico', authMiddleware, async (req, res) => {
   try {
     const [rows] = await db.query(
-      'SELECT * FROM sensor_data ORDER BY created_at DESC LIMIT 50'
+      'SELECT * FROM sensor_data WHERE user_id = ? OR user_id IS NULL ORDER BY created_at DESC LIMIT 50',
+      [req.user.id]
     );
     res.json({ historico: rows });
   } catch (err) {
