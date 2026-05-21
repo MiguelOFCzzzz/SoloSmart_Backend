@@ -8,6 +8,8 @@ console.log(process.env.DB_HOST);
 console.log(process.env.DB_USER);
 console.log(process.env.DB_PASS);
 
+
+
 const app = express();
 const PORT = process.env.PORT || 3001; // ← mudei para 3001
 
